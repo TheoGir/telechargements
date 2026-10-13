@@ -1,20 +1,19 @@
-# Téléchargements
+# Les jeux de Théo
 
-Les applis de Théo, prêtes à installer.
+**Site : https://theogir.github.io/telechargements/**
 
 ## HEAPS
 
 Le jeu de piles en 3D : Nim, Wythoff et vos propres règles, contre l'IA ou
 entre amis.
 
-**Installer** : ouvrez l'onglet [Releases](../../releases), choisissez la
-dernière version de HEAPS (par exemple « heaps 2.0.0 ») et téléchargez le
-fichier `.exe` (Windows).
+- **Jouer dans le navigateur** (PC, téléphone, tablette) :
+  https://theogir.github.io/telechargements/heaps/ . Le jeu peut ensuite être
+  ajouté comme une appli et marche hors ligne.
+- **Windows** : [heaps-windows.exe](https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe).
+  L'appli installée se met à jour toute seule.
 
-Une fois installé, HEAPS se met à jour tout seul : à chaque démarrage, il
-vérifie s'il existe une nouvelle version et propose de l'installer. Chaque
-mise à jour est signée, l'appli refuse tout fichier qui ne vient pas d'ici.
-
-> La version « heaps · canal de mise à jour » sert aux applis déjà
-> installées pour trouver leur dernière version. Il n'y a rien à y
-> télécharger.
+Ce dépôt est rempli automatiquement à chaque nouvelle version : le dossier
+`heaps/` est la version web, et les « Releases » contiennent les
+installateurs. La version « heaps · canal de mise à jour » sert aux applis
+installées pour trouver leur dernière version.

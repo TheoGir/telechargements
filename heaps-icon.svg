@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icône HEAPS : trois jetons empilés sur l'arène, couleurs de l'univers Aurora. -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#0e2b3a"/>
+      <stop offset=".55" stop-color="#07131d"/>
+      <stop offset="1" stop-color="#03070c"/>
+    </radialGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8ff8f8"/>
+      <stop offset=".55" stop-color="#52eff2"/>
+      <stop offset="1" stop-color="#ffc46b"/>
+    </linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#52eff2"/>
+      <stop offset="1" stop-color="#9ef3d8"/>
+    </linearGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#52eff2" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffc46b" stop-opacity=".55"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#52eff2" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#52eff2" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#52eff2" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#52eff2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#52eff2" stroke-opacity=".07" stroke-width="2"/>
+    </pattern>
+    <clipPath id="tile"><rect x="32" y="32" width="960" height="960" rx="216"/></clipPath>
+    <filter id="glow" x="-60%" y="-90%" width="220%" height="280%"><feGaussianBlur stdDeviation="1.4"/></filter>
+      </defs>
+  <g clip-path="url(#tile)">
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <rect width="1024" height="1024" fill="url(#grid)"/>
+    <ellipse cx="512" cy="430" rx="420" ry="330" fill="url(#halo)"/>
+    <ellipse cx="512" cy="836" rx="330" ry="84" fill="url(#floor)"/>
+    <ellipse cx="512" cy="836" rx="300" ry="70" fill="none" stroke="#52eff2" stroke-opacity=".35" stroke-width="5"/>
+    <ellipse cx="512" cy="836" rx="220" ry="50" fill="none" stroke="#ffc46b" stroke-opacity=".3" stroke-width="3"/>
+  </g>
+  <g transform="translate(512 480) scale(16.6) translate(-20 -21)" stroke-linecap="round" stroke-linejoin="round">
+    <g filter="url(#glow)" opacity=".9">
+      <path d="M20 3.5 36 12 20 20.5 4 12Z" fill="#52eff2" opacity=".55"/>
+    </g>
+    <path d="M4 28.5 20 37l16-8.5" fill="none" stroke="url(#far)" stroke-width="2.6"/>
+    <path d="M4 20.5 20 29l16-8.5" fill="none" stroke="url(#near)" stroke-width="2.6"/>
+    <path d="M20 3.5 36 12 20 20.5 4 12Z" fill="url(#top)" stroke="#d9fdfd" stroke-width=".9"/>
+    <path d="M20 7.2 29 12l-9 4.8L11 12Z" fill="#fff" fill-opacity=".26"/>
+    <path d="M11.5 10.6 20 6" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".7"/>
+  </g>
+  <rect x="32" y="32" width="960" height="960" rx="216" fill="none" stroke="#52eff2" stroke-opacity=".28" stroke-width="4"/>
+</svg>
