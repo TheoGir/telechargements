@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#050a10">
   <meta name="color-scheme" content="dark">
   <title>HEAPS</title>
-  <meta name="description" content="HEAPS, le jeu de piles en 3D : installez-le en un clic, gratuitement.">
+  <meta name="description" content="HEAPS, le jeu de piles en 3D : téléchargez-le gratuitement pour Windows ou jouez en ligne.">
   <link rel="icon" href="heaps-icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="heaps/apple-touch-icon.png">
@@ -46,6 +46,11 @@
     <a class="go" id="go" href="heaps/">Jouer maintenant</a>
     <p class="hint" id="hint">Directement ici, rien à installer.</p>
 
+    <div class="steps" id="smartscreen">
+      <p style="margin:0 0 8px">Ouvrez le fichier téléchargé : HEAPS s'installe tout seul et se lance, sans aucune question.</p>
+      <p style="margin:0">Si Windows affiche <b>« Windows a protégé votre ordinateur »</b>, cliquez sur <b>Informations complémentaires</b> puis <b>Exécuter quand même</b>. C'est normal pour un jeu gratuit d'un petit créateur.</p>
+    </div>
+
     <div class="steps" id="ios">
       <ol>
         <li>Touchez le bouton <b>Partager</b> en bas de Safari (carré avec une flèche).</li>
@@ -57,55 +62,59 @@
 
     <details>
       <summary>Autres façons de l'avoir</summary>
-      <p><b>Application Windows classique</b> : <a href="https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe">heaps-windows.exe</a>. Elle s'installe sans droits administrateur et se met à jour toute seule. Si Windows affiche « Windows a protégé votre ordinateur », cliquez sur « Informations complémentaires » puis « Exécuter quand même » : le jeu vient d'un petit créateur, pas d'un éditeur payant.</p>
-      <p><b>Sur Android</b> : dans Chrome, menu ⋮ puis « Installer l'application ».</p>
+      <p><b>Windows</b> : <a href="https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe">heaps-windows.exe</a>, l'appli complète, qui fonctionne sans Internet et se met à jour toute seule.</p>
+      <p><b>Navigateur</b> (Mac, Linux, téléphone) : <a href="heaps/">jouer en ligne</a>, rien à installer.</p>
     </details>
 
     <footer>Vos parties restent sur votre appareil : rien n'est envoyé nulle part.</footer>
   </main>
   <script>
-    // Un seul bouton, adapté à l'appareil : installer en un clic là où le
-    // navigateur le permet (Chrome, Edge, Android), sinon jouer tout de suite.
-    const go = document.getElementById('go');
-    const hint = document.getElementById('hint');
-    const alt = document.getElementById('alt');
+    // Un seul bouton, adapté à l'appareil : sur un PC Windows, l'appli
+    // complète (installation en un clic) ; sur téléphone, le jeu en ligne,
+    // à ajouter à l'écran d'accueil.
+    const $ = id => document.getElementById(id);
+    const go = $('go'), hint = $('hint'), alt = $('alt');
     const ua = navigator.userAgent;
     const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const standalone = matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches || navigator.standalone;
-    if (standalone) location.replace('heaps/');
+    const windows = /Windows NT/.test(ua) && !/Phone/.test(ua);
+    const installer = 'https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe';
+    if (matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches || navigator.standalone) location.replace('heaps/');
 
-    if (ios) {
+    if (windows) {
+      go.href = installer;
+      go.textContent = 'Télécharger HEAPS';
+      hint.textContent = 'Pour Windows · gratuit · se met à jour tout seul';
+      go.addEventListener('click', () => {
+        $('smartscreen').style.display = 'block';
+        hint.textContent = 'Le téléchargement commence…';
+      });
+      alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a> dans le navigateur.';
+    } else if (ios) {
       go.textContent = 'Installer HEAPS';
       hint.textContent = 'Deux gestes dans Safari :';
-      go.addEventListener('click', event => { event.preventDefault(); document.getElementById('ios').style.display = 'block'; });
-      document.getElementById('ios').style.display = 'block';
+      go.addEventListener('click', event => event.preventDefault());
+      $('ios').style.display = 'block';
       alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a>, sans rien installer.';
+    } else {
+      // Android (Chrome) : installation en un clic quand le navigateur la propose.
+      let offer = null;
+      addEventListener('beforeinstallprompt', event => {
+        event.preventDefault();
+        offer = event;
+        go.textContent = 'Installer HEAPS';
+        hint.textContent = 'Un geste, quelques secondes. Il se met à jour tout seul.';
+        alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a>.';
+      });
+      go.addEventListener('click', async event => {
+        if (!offer) return;
+        event.preventDefault();
+        offer.prompt();
+        const { outcome } = await offer.userChoice;
+        offer = null;
+        if (outcome !== 'accepted') { go.textContent = 'Jouer maintenant'; hint.textContent = 'Directement ici, rien à installer.'; }
+      });
+      addEventListener('appinstalled', () => { go.textContent = 'Ouvrir HEAPS'; hint.textContent = 'C\'est installé : HEAPS est dans vos applis.'; alt.textContent = ''; });
     }
-
-    let offer = null;
-    addEventListener('beforeinstallprompt', event => {
-      event.preventDefault();
-      offer = event;
-      go.textContent = 'Installer HEAPS';
-      hint.textContent = 'Un clic, quelques secondes, aucun avertissement. Il se met à jour tout seul.';
-      alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a> dans le navigateur.';
-    });
-    go.addEventListener('click', async event => {
-      if (!offer) return;
-      event.preventDefault();
-      offer.prompt();
-      const { outcome } = await offer.userChoice;
-      offer = null;
-      if (outcome !== 'accepted') {
-        go.textContent = 'Jouer maintenant';
-        hint.textContent = 'Directement ici, rien à installer.';
-      }
-    });
-    addEventListener('appinstalled', () => {
-      go.textContent = 'Ouvrir HEAPS';
-      hint.textContent = 'C\'est installé : HEAPS est sur votre bureau et dans vos applis.';
-      alt.textContent = '';
-    });
   </script>
 </body>
 </html>
