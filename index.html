@@ -5,66 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050a10">
   <meta name="color-scheme" content="dark">
-  <title>Les jeux de Théo</title>
-  <meta name="description" content="HEAPS, le jeu de piles en 3D : jouez dans le navigateur ou installez-le, gratuitement.">
+  <title>HEAPS</title>
+  <meta name="description" content="HEAPS, le jeu de piles en 3D : installez-le en un clic, gratuitement.">
   <link rel="icon" href="heaps-icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="heaps/apple-touch-icon.png">
   <style>
     :root { --bg: #050a10; --panel: rgba(14, 34, 46, .72); --line: rgba(82, 239, 242, .22); --cyan: #52eff2; --text: #e9f6ff; --muted: #9fb7c4; }
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; background: radial-gradient(70% 55% at 50% 0%, #0b2230 0%, var(--bg) 70%) fixed, var(--bg); color: var(--text); font: 16px/1.55 'Segoe UI', system-ui, sans-serif; }
-    main { max-width: 760px; margin: 0 auto; padding: 56px 16px 64px; }
-    header { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
-    header img { width: 44px; height: 48px; filter: drop-shadow(0 0 14px rgba(82, 239, 242, .45)); }
-    header b { font-weight: 700; letter-spacing: .32em; font-size: 15px; }
-    h1 { font-size: clamp(34px, 7vw, 52px); line-height: 1.08; margin: 0 0 14px; letter-spacing: -.01em; }
+    main { max-width: 640px; margin: 0 auto; padding: 56px 16px 64px; text-align: center; }
+    .logo { width: 64px; height: 70px; filter: drop-shadow(0 0 18px rgba(82, 239, 242, .5)); }
+    .name { display: block; margin: 14px 0 34px; font-weight: 700; letter-spacing: .5em; margin-right: -.5em; font-size: 15px; }
+    h1 { font-size: clamp(32px, 7vw, 48px); line-height: 1.1; margin: 0 0 14px; }
     h1 span { color: var(--cyan); }
-    .lead { color: var(--muted); font-size: 18px; margin: 0 0 32px; max-width: 52ch; }
-    .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-    a.card { display: block; padding: 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); color: inherit; text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; }
-    a.card:hover, a.card:focus-visible { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(82, 239, 242, .12); outline: none; }
-    a.card.main { background: linear-gradient(135deg, rgba(82, 239, 242, .18), rgba(14, 34, 46, .8)); border-color: rgba(82, 239, 242, .5); }
-    .card strong { display: block; font-size: 20px; margin-bottom: 6px; }
-    .card strong::after { content: ' →'; color: var(--cyan); }
-    .card p { margin: 0; color: var(--muted); font-size: 15px; }
-    h2 { font-size: 15px; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); margin: 48px 0 12px; font-weight: 600; }
-    ul { margin: 0; padding-left: 20px; color: var(--muted); }
-    li { margin: 6px 0; }
-    li b { color: var(--text); font-weight: 600; }
-    footer { margin-top: 56px; color: #5f7884; font-size: 13px; }
+    .lead { color: var(--muted); font-size: 18px; margin: 0 auto 34px; max-width: 40ch; }
+    .go { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 260px; padding: 18px 30px; border: 0; border-radius: 14px; background: var(--cyan); color: #04212a; font-family: inherit; font-size: 19px; font-weight: 700; line-height: 1; text-decoration: none; cursor: pointer; box-shadow: 0 0 0 1px rgba(255,255,255,.2) inset, 0 12px 40px rgba(82, 239, 242, .35); transition: transform .15s, box-shadow .15s; }
+    .go:hover, .go:focus-visible { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255,255,255,.3) inset, 0 16px 50px rgba(82, 239, 242, .5); outline: none; }
+    .hint { color: var(--muted); font-size: 14px; margin: 14px 0 0; min-height: 1.5em; }
+    .alt { margin-top: 26px; font-size: 15px; color: var(--muted); }
+    .alt a { color: var(--text); }
+    .steps { display: none; text-align: left; margin: 26px auto 0; max-width: 380px; padding: 18px 22px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); }
+    .steps ol { margin: 0; padding-left: 22px; }
+    .steps li { margin: 8px 0; }
+    .steps b { color: var(--cyan); }
+    details { margin-top: 52px; text-align: left; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: 15px; }
+    summary { cursor: pointer; color: var(--text); }
+    details p { margin: 10px 0; }
+    details a { color: var(--cyan); }
+    footer { margin-top: 40px; color: #5f7884; font-size: 13px; }
   </style>
 </head>
 <body>
   <main>
-    <header><img src="heaps-icon.svg" alt=""><b>HEAPS</b></header>
+    <img class="logo" src="heaps-icon.svg" alt="">
+    <b class="name">HEAPS</b>
     <h1>Le prochain coup <span>vous appartient.</span></h1>
-    <p class="lead">Nim, Wythoff, Flora et vos propres règles dans une arène 3D, contre une IA de quatre niveaux. Gratuit, sans compte, sans publicité.</p>
+    <p class="lead">Le jeu de piles en 3D, contre une IA de quatre niveaux. Gratuit, sans compte, sans publicité.</p>
 
-    <div class="choices">
-      <a class="card main" href="heaps/">
-        <strong>Jouer maintenant</strong>
-        <p>Directement dans le navigateur, sur ordinateur, tablette ou téléphone. Rien à installer.</p>
-      </a>
-      <a class="card" href="https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe">
-        <strong>Télécharger pour Windows</strong>
-        <p>L'appli complète, qui fonctionne sans Internet et se met à jour toute seule.</p>
-      </a>
+    <a class="go" id="go" href="heaps/">Jouer maintenant</a>
+    <p class="hint" id="hint">Directement ici, rien à installer.</p>
+
+    <div class="steps" id="ios">
+      <ol>
+        <li>Touchez le bouton <b>Partager</b> en bas de Safari (carré avec une flèche).</li>
+        <li>Choisissez <b>Sur l'écran d'accueil</b>, puis <b>Ajouter</b>.</li>
+      </ol>
     </div>
 
-    <h2>L'ajouter comme une appli</h2>
-    <ul>
-      <li><b>Sur ordinateur</b> (Chrome ou Edge) : ouvrez le jeu, puis cliquez sur l'icône « Installer » au bout de la barre d'adresse.</li>
-      <li><b>Sur Android</b> : ouvrez le jeu dans Chrome, menu ⋮, puis « Ajouter à l'écran d'accueil ».</li>
-      <li><b>Sur iPhone et iPad</b> : ouvrez le jeu dans Safari, bouton Partager, puis « Sur l'écran d'accueil ».</li>
-    </ul>
-    <p class="lead" style="font-size:15px;margin-top:12px">Le jeu marche ensuite même hors ligne, et chaque nouvelle version arrive toute seule.</p>
+    <p class="alt" id="alt"></p>
 
-    <h2>Installation Windows</h2>
-    <ul>
-      <li>Au premier lancement, Windows peut afficher « Windows a protégé votre ordinateur », parce que le jeu vient d'un petit créateur. Cliquez sur <b>Informations complémentaires</b>, puis <b>Exécuter quand même</b>.</li>
-      <li>Ensuite, HEAPS propose lui-même ses mises à jour au démarrage.</li>
-    </ul>
+    <details>
+      <summary>Autres façons de l'avoir</summary>
+      <p><b>Application Windows classique</b> : <a href="https://github.com/TheoGir/telechargements/releases/download/heaps-latest/heaps-windows.exe">heaps-windows.exe</a>. Elle s'installe sans droits administrateur et se met à jour toute seule. Si Windows affiche « Windows a protégé votre ordinateur », cliquez sur « Informations complémentaires » puis « Exécuter quand même » : le jeu vient d'un petit créateur, pas d'un éditeur payant.</p>
+      <p><b>Sur Android</b> : dans Chrome, menu ⋮ puis « Installer l'application ».</p>
+    </details>
 
     <footer>Vos parties restent sur votre appareil : rien n'est envoyé nulle part.</footer>
   </main>
+  <script>
+    // Un seul bouton, adapté à l'appareil : installer en un clic là où le
+    // navigateur le permet (Chrome, Edge, Android), sinon jouer tout de suite.
+    const go = document.getElementById('go');
+    const hint = document.getElementById('hint');
+    const alt = document.getElementById('alt');
+    const ua = navigator.userAgent;
+    const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const standalone = matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches || navigator.standalone;
+    if (standalone) location.replace('heaps/');
+
+    if (ios) {
+      go.textContent = 'Installer HEAPS';
+      hint.textContent = 'Deux gestes dans Safari :';
+      go.addEventListener('click', event => { event.preventDefault(); document.getElementById('ios').style.display = 'block'; });
+      document.getElementById('ios').style.display = 'block';
+      alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a>, sans rien installer.';
+    }
+
+    let offer = null;
+    addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      offer = event;
+      go.textContent = 'Installer HEAPS';
+      hint.textContent = 'Un clic, quelques secondes, aucun avertissement. Il se met à jour tout seul.';
+      alt.innerHTML = 'Ou <a href="heaps/">jouer tout de suite</a> dans le navigateur.';
+    });
+    go.addEventListener('click', async event => {
+      if (!offer) return;
+      event.preventDefault();
+      offer.prompt();
+      const { outcome } = await offer.userChoice;
+      offer = null;
+      if (outcome !== 'accepted') {
+        go.textContent = 'Jouer maintenant';
+        hint.textContent = 'Directement ici, rien à installer.';
+      }
+    });
+    addEventListener('appinstalled', () => {
+      go.textContent = 'Ouvrir HEAPS';
+      hint.textContent = 'C\'est installé : HEAPS est sur votre bureau et dans vos applis.';
+      alt.textContent = '';
+    });
+  </script>
 </body>
 </html>

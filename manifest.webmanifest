@@ -1,0 +1,16 @@
+{
+  "id": "heaps/",
+  "name": "HEAPS",
+  "short_name": "HEAPS",
+  "description": "Nim, Wythoff, Flora et vos propres règles dans une arène 3D, contre une IA de quatre niveaux.",
+  "lang": "fr",
+  "start_url": "heaps/",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#050a10",
+  "theme_color": "#050a10",
+  "icons": [
+    { "src": "heaps/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "heaps/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
