@@ -6,6 +6,9 @@
 // ne change jamais, ils sont servis depuis le cache sans attendre le réseau
 // (démarrage immédiat sur un réseau lent ou absent). Tout le reste (page,
 // moteur WebAssembly, manifeste) est demandé au réseau d'abord.
+//
+// Les salles 3D (dossier salles/) sont gardées par l'appli elle-même, après
+// vérification de leur empreinte (src/lib/arena/assets/) : on n'y touche pas.
 const CACHE = 'heaps';
 
 self.addEventListener('install', () => self.skipWaiting());
@@ -21,7 +24,7 @@ const store = (event, request, response) => {
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
-  if (request.method !== 'GET' || url.origin !== location.origin) return;
+  if (request.method !== 'GET' || url.origin !== location.origin || url.pathname.includes('/salles/')) return;
   const immutable = url.pathname.includes('/assets/');
   event.respondWith(
     immutable
